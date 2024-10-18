@@ -1,44 +1,38 @@
-import os
-#test
-# 1. Resource leak (File not properly closed)
-def read_file(file_path):
-    f = open(file_path, "r")  # File is opened but not properly closed
-    content = f.read()
-    return content
+import sqlite3
+import pickle
+
+# 1. Uninitialized variable usage
+def example_function():
+    print(uninitialized_variable)  # This will cause an error
 
 # 2. SQL Injection vulnerability
-import sqlite3
-
-def get_user_data(user_id):
-    conn = sqlite3.connect("users.db")
+def fetch_user_data(username):
+    conn = sqlite3.connect('users.db')
     cursor = conn.cursor()
-
-    # Directly embedding user input into query without validation
-    query = "SELECT * FROM users WHERE id = " + user_id
+    # Vulnerable to SQL injection
+    query = f"SELECT * FROM users WHERE username = '{username}'"
     cursor.execute(query)
+    return cursor.fetchall()
 
-    result = cursor.fetchall()
-    conn.close()
+# 3. Insecure deserialization
+def load_data(serialized_data):
+    data = pickle.loads(serialized_data)  # Insecure deserialization
+    return data
+
+# 4. Hardcoded password
+def connect_to_service():
+    password = "supersecret"  # Hardcoded secret
+    print(f"Connecting with password: {password}")
+
+# 5. Use of `eval`
+def evaluate_expression(expr):
+    result = eval(expr)  # Using eval is dangerous
     return result
 
-# 3. Hardcoded credentials
-def authenticate():
-    username = "admin"
-    password = "password123"  # Hardcoded password (bad practice)
-    if username == "admin" and password == "password123":
-        return True
-    else:
-        return False
-
-# 4. Insecure use of subprocess
-import subprocess
-
-def execute_command(cmd):
-    # Insecure call to subprocess without sanitizing input
-    result = subprocess.run(cmd, shell=True)  # Potential shell injection
-    return result
-
-# 5. Unused variable
-def calculate_sum(a, b):
-    result = a + b  # The result is calculated but never returned or used
-    unused_variable = 42  # Unused variable
+if __name__ == "__main__":
+    example_function()
+    print(fetch_user_data("admin' OR '1'='1"))  # Example of SQL injection
+    serialized = pickle.dumps({'key': 'value'})
+    print(load_data(serialized))
+    connect_to_service()
+    print(evaluate_expression("2 + 2"))
