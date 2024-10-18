@@ -5,7 +5,11 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
-
+    
+permissions:
+  contents: read  # Allow reading repository contents
+  actions: write  # Allow writing actions if needed
+  
 jobs:
   analyze:
     name: Analyze Code with CodeQL
