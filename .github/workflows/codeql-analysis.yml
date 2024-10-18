@@ -24,7 +24,7 @@ jobs:
       uses: github/codeql-action/analyze@v2
       with:
         queries: './.github/codeql/queries/my-query.ql'  # Adjust path if needed
-        output: 'codeql-results'
+        output: './codeql-results'
 
     - name: Upload SARIF results
       uses: github/codeql-action/upload-sarif@v2
