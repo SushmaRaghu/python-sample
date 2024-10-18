@@ -1,37 +1,44 @@
-# example.py
-#test
-def add_numbers(a, b):
-    """
-    This function adds two numbers.
-    """
-    return a + b
+import os
 
-def unused_function():
-    """
-    This function is never called and serves as an example of an unused function.
-    """
-    result = 10 + 5  # This variable is unused
+# 1. Resource leak (File not properly closed)
+def read_file(file_path):
+    f = open(file_path, "r")  # File is opened but not properly closed
+    content = f.read()
+    return content
+
+# 2. SQL Injection vulnerability
+import sqlite3
+
+def get_user_data(user_id):
+    conn = sqlite3.connect("users.db")
+    cursor = conn.cursor()
+
+    # Directly embedding user input into query without validation
+    query = "SELECT * FROM users WHERE id = " + user_id
+    cursor.execute(query)
+
+    result = cursor.fetchall()
+    conn.close()
     return result
 
-def divide_numbers(a, b):
-    """
-    This function divides two numbers and handles division by zero.
-    """
-    if b == 0:
-        raise ValueError("Cannot divide by zero!")
-    return a / b
+# 3. Hardcoded credentials
+def authenticate():
+    username = "admin"
+    password = "password123"  # Hardcoded password (bad practice)
+    if username == "admin" and password == "password123":
+        return True
+    else:
+        return False
 
-def insecure_code():
-    """
-    This function demonstrates a potential security vulnerability by using eval().
-    """
-    user_input = "2 + 2"
-    result = eval(user_input)  # Warning: This can execute arbitrary code!
+# 4. Insecure use of subprocess
+import subprocess
+
+def execute_command(cmd):
+    # Insecure call to subprocess without sanitizing input
+    result = subprocess.run(cmd, shell=True)  # Potential shell injection
     return result
 
-if __name__ == "__main__":
-    print("Add 2 and 3:", add_numbers(2, 3))
-    print("Divide 10 by 2:", divide_numbers(10, 2))
-    # Call the unused function to see it won't be detected in CodeQL
-    unused_function()
-
+# 5. Unused variable
+def calculate_sum(a, b):
+    result = a + b  # The result is calculated but never returned or used
+    unused_variable = 42  # Unused variable
