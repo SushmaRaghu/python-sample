@@ -28,4 +28,9 @@ jobs:
 
     - name: Run CodeQL analysis
       uses: github/codeql-action/analyze@v2
-    
+
+    - name: Upload SARIF results as artifact
+      uses: actions/upload-artifact@v2
+      with:
+          name: codeql-sarif-results  # Name of the artifact
+          path: results/python.sarif 
