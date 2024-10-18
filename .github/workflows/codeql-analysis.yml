@@ -27,6 +27,11 @@ jobs:
         with:
           output: codeql-results
 
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v1
+        with:
+          format: sarif
+
       - name: List codeql-results
         run: ls codeql-results
 
