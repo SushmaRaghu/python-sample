@@ -5,8 +5,6 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
-  schedule:
-    - cron: '0 0 * * 1'
 
 jobs:
   analyze:
@@ -20,23 +18,16 @@ jobs:
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v2
       with:
-        languages: 'python'  # Specify the language you're analyzing
+        languages: 'python'  # Specify the language of your codebase
 
-    - name: Build project
-      run: |
-        # Add any necessary build steps here (if required)
-
-    # Run CodeQL analysis and specify SARIF output location
     - name: Run CodeQL analysis
       uses: github/codeql-action/analyze@v2
       with:
-        output: './codeql-results'  # Store intermediate analysis results here
-        # Explicitly generate SARIF file
-        sarif: 'codeql-results/results.sarif'
+        queries: './.github/codeql/queries/my-query.ql'  # Adjust path if needed
+        output: 'codeql-results'
 
-    # Upload SARIF results using the specified SARIF file
     - name: Upload SARIF results
       uses: github/codeql-action/upload-sarif@v2
       with:
-        sarif_file: './codeql-results/results.sarif'  # Use the correct SARIF file path
-        category: 'python-security'
+        sarif_file: 'results.sarif'
+        category: 'security'
