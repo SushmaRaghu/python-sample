@@ -1,5 +1,5 @@
 import os
-
+#test
 # 1. Resource leak (File not properly closed)
 def read_file(file_path):
     f = open(file_path, "r")  # File is opened but not properly closed
