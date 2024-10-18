@@ -29,5 +29,5 @@ jobs:
     - name: Upload SARIF results
       uses: github/codeql-action/upload-sarif@v2
       with:
-        sarif_file: 'results.sarif'
+        sarif_file: './codeql-results/results.sarif'
         category: 'security'
