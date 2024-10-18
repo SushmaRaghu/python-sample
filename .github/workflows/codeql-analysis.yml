@@ -29,7 +29,3 @@ jobs:
     - name: Run CodeQL analysis
       uses: github/codeql-action/analyze@v2
     
-
-    - name: Upload SARIF results
-      uses: github/codeql-action/upload-sarif@v2
-     
