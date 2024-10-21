@@ -27,10 +27,10 @@ jobs:
           name: codeql-sarif
           path: codeql-results/  # Download the SARIF report to this directory
 
-      - name: Rename SARIF File to JSON
+      - name: Rename SARIF Report to sample.json
         run: |
-          sarif_file=$(ls ./codeql-results/*.sarif)
-          mv "$sarif_file" "${sarif_file%.sarif}.json"  # Change the extension to .json
+          # Rename the downloaded SARIF report to sample.json
+          mv ./codeql-results/*.sarif ./codeql-results/sample.json
 
     
   
