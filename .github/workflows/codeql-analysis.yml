@@ -16,5 +16,4 @@ permissions:
 jobs:
   codeql-analysis:
     uses: SushmaRaghu/actions/.github/workflows/common.yml@main  # Reference the reusable workflow
-    with:
-      language: 'python'  # Specify the language for CodeQL analysis (can be customized per repo)
+  
