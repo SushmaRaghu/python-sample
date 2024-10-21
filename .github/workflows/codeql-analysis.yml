@@ -16,4 +16,21 @@ permissions:
 jobs:
   codeql-analysis:
     uses: SushmaRaghu/actions/.github/workflows/common.yml@main  # Reference the reusable workflow
+
+  download-and-upload-sarif:
+    runs-on: ubuntu-latest
+    needs: codeql-analysis  # Ensure the CodeQL analysis completes first
+    steps:
+      - name: Download SARIF Report Artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: codeql-sarif
+          path: codeql-results/  # Download the SARIF report to this directory
+
+      - name: Rename SARIF File to JSON
+        run: |
+          sarif_file=$(ls ./codeql-results/*.sarif)
+          mv "$sarif_file" "${sarif_file%.sarif}.json"  # Change the extension to .json
+
+    
   
