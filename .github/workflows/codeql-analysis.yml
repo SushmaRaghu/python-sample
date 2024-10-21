@@ -48,15 +48,4 @@ jobs:
           # Rename the downloaded SARIF report to sample.json
           mv ./codeql-results/*.sarif ./codeql-results/sample.json
     
-    - name: Run Curl Command with SARIF Report
-      run: |
-          sarif_content=$(cat ./codeql-results/sample.json)  
-          curl --request POST "https://concert-sushma1.fyre.ibm.com:12443/ingestion/api/v1/upload_files" \
-          --header 'Accept: application/json' \
-          --header 'Content-Type: multipart/form-data' \
-          --header 'InstanceId: 0000-0000-0000-0000' \
-          --header "Authorization: C_API_KEY aWJtY29uY2VydDo0OTI1ZWRlMy1kZDIyLTQzYzMtOTA4ZS1kNDUwZmUxNjFjOTI=" \
-          --form 'data_type=static_code_scan' \
-          --form 'filename=@./codeql-results/sample.json' \
-          --form 'content_type=application/json' \
-          --form 'metadata={"env_name": "prod", "repo_url": "https://github.com/SushmaRaghu/python-sample", "repo_name": "python-sample"}'
+     
