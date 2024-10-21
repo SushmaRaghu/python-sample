@@ -22,7 +22,7 @@ jobs:
     needs: codeql-analysis  # Ensure the CodeQL analysis completes first
     steps:
       - name: Download SARIF Report Artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: codeql-sarif
           path: codeql-results/  # Download the SARIF report to this directory
