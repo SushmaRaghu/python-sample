@@ -30,7 +30,7 @@ jobs:
       - name: Rename SARIF Report to sample.json
         run: |
           # Rename the downloaded SARIF report to sample.json
-          mv ./codeql-results/*.sarif ./codeql-results/sample.json
+          mv codeql-results/*.sarif codeql-results/sample.json
 
     
   
