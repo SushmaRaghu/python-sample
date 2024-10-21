@@ -36,3 +36,9 @@ jobs:
       with:
           name: codeql-sarif
           path: codeql-results/**/*.sarif
+
+    - name: Download SARIF Report Artifact
+      uses: actions/download-artifact@v3
+      with:
+          name: sarif-report
+          path: ./sarif-reports  # Directory to download the artifact
