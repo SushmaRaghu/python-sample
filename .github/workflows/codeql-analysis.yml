@@ -1,51 +1,20 @@
-name: "CodeQL Analysis"
+name: CodeQL Scan and SARIF Generation
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
   pull_request:
-    branches: [main]
-    
+
+
 permissions:
   contents: read
   actions: read
   checks: write
   security-events: write
-  
+
 jobs:
-  analyze:
-    name: Analyze Code with CodeQL
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
-
-    - name: Initialize CodeQL
-      uses: github/codeql-action/init@v2
-      with:
-        languages: 'python'  # Specify the language of your codebase
-
-    - name: Run CodeQL analysis
-      uses: github/codeql-action/analyze@v2
-      with:
-          output: codeql-results
-
-    - name: Upload SARIF report
-      uses: actions/upload-artifact@v4
-      with:
-          name: codeql-sarif
-          path: codeql-results/**/*.sarif
-
-    - name: Download SARIF Report Artifact
-      uses: actions/download-artifact@v4
-      with:
-          name: codeql-sarif
-          path: codeql-results/
-
-    - name: Rename SARIF Report to sample.json
-      run: |
-          # Rename the downloaded SARIF report to sample.json
-          mv ./codeql-results/*.sarif ./codeql-results/sample.json
-    
-     
+  codeql-analysis:
+    uses: SushmaRaghu/actions/.github/workflows/common.yml@main  # Reference the reusable workflow
+    with:
+      language: 'python'  # Specify the language for CodeQL analysis (can be customized per repo)
