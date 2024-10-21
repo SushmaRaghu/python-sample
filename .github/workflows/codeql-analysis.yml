@@ -27,10 +27,19 @@ jobs:
           name: codeql-sarif
           path: codeql-results/  # Download the SARIF report to this directory
 
+      - name: List Files in codeql-results Before Rename
+        run: ls -l codeql-results/
+
       - name: Rename SARIF Report to sample.json
         run: |
-          # Rename the downloaded SARIF report to sample.json
-          mv codeql-results/*.sarif codeql-results/sample.json
+          # Check if any SARIF file exists before renaming
+          if ls codeql-results/*.sarif 1> /dev/null 2>&1; then
+            mv codeql-results/*.sarif codeql-results/sample.json
+            echo "Renamed SARIF file to sample.json"
+          else
+            echo "No SARIF files found to rename."
+            exit 1  # Exit with an error if no SARIF files are found
+          fi
 
     
   
